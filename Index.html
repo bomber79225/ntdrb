@@ -14,9 +14,13 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
-        /* 避免長文字換行 */
         .no-wrap {
             white-space: nowrap;
+        }
+        /* 針對 iOS 圓角輸入框優化 */
+        input {
+            -webkit-appearance: none;
+            border-radius: 0;
         }
     </style>
 </head>
@@ -30,18 +34,18 @@
         </div>
 
         <div class="p-6 space-y-6">
-            <!-- 匯率設定區 (修正後的版本) -->
+            <!-- 匯率設定區 -->
             <div class="bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <label class="text-xs font-bold text-indigo-900 uppercase tracking-widest">匯率設定</label>
-                    <span class="text-[10px] font-bold text-indigo-400 bg-white px-2 py-1 rounded-lg shadow-sm border border-indigo-50">FIXED RATIO</span>
+                    <span class="text-[10px] font-bold text-indigo-400 bg-white px-2 py-1 rounded-lg shadow-sm border border-indigo-50 uppercase">Rate Settings</span>
                 </div>
                 
                 <div class="flex items-center bg-white border-2 border-indigo-100 rounded-2xl px-4 py-3 focus-within:border-indigo-500 transition-all shadow-sm">
                     <span class="text-gray-500 font-medium no-wrap mr-3">1 台幣 =</span>
                     <input type="number" id="rateInput" value="1" step="any"
                         class="flex-1 focus:outline-none text-indigo-600 font-bold text-xl w-full bg-transparent"
-                        placeholder="請輸入">
+                        placeholder="請輸入匯率">
                     <span class="text-gray-400 font-bold no-wrap ml-2">R 幣</span>
                 </div>
             </div>
@@ -59,7 +63,7 @@
                     </div>
                 </div>
 
-                <!-- 切換按鈕圖示 (置中懸浮) -->
+                <!-- 切換按鈕圖示 -->
                 <div class="flex justify-center -my-3 relative z-10">
                     <div class="bg-white p-2 rounded-full shadow-lg border border-gray-100 text-indigo-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -101,7 +105,6 @@
 
         function formatVal(num) {
             if (isNaN(num) || num === 0) return '';
-            // 四捨五入到小數點後四位，並移除無用的 0
             return Math.round((num + Number.EPSILON) * 10000) / 10000;
         }
 
@@ -140,9 +143,11 @@
             rInput.value = '';
         });
 
-        // 手機端友善：點擊輸入框自動全選
+        // 自動全選功能
         [rateInput, twdInput, rInput].forEach(input => {
-            input.addEventListener('focus', (e) => e.target.select());
+            input.addEventListener('focus', (e) => {
+                setTimeout(() => e.target.select(), 10);
+            });
         });
     </script>
 </body>
