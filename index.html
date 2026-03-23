@@ -2,10 +2,11 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>R幣換算器</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* 移除瀏覽器預設滾輪與箭頭 */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -14,39 +15,39 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+        /* 提升手機輸入流暢感 */
+        input {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
         .no-wrap {
             white-space: nowrap;
         }
-        /* 針對 iOS 圓角輸入框優化 */
-        input {
-            -webkit-appearance: none;
-            border-radius: 0;
-        }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100">
+    <div class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-100">
         <!-- 表頭區域 -->
         <div class="bg-indigo-600 pt-10 pb-8 px-6 text-center text-white">
             <h1 class="text-3xl font-bold tracking-tight">R幣換算器</h1>
-            <p class="text-indigo-100 mt-2 text-sm opacity-80">自訂匯率，即時雙向換算</p>
+            <p class="text-indigo-100 mt-2 text-sm opacity-80">極速、流暢、雙向換算</p>
         </div>
 
         <div class="p-6 space-y-6">
             <!-- 匯率設定區 -->
-            <div class="bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100">
+            <div class="bg-slate-50 p-5 rounded-3xl border border-slate-200">
                 <div class="flex items-center justify-between mb-3 px-1">
-                    <label class="text-xs font-bold text-indigo-900 uppercase tracking-widest">匯率設定</label>
-                    <span class="text-[10px] font-bold text-indigo-400 bg-white px-2 py-1 rounded-lg shadow-sm border border-indigo-50 uppercase">Rate Settings</span>
+                    <label class="text-xs font-bold text-slate-500 uppercase tracking-widest">匯率比例設定</label>
+                    <span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded-lg border border-indigo-100">CUSTOM RATE</span>
                 </div>
                 
-                <div class="flex items-center bg-white border-2 border-indigo-100 rounded-2xl px-4 py-3 focus-within:border-indigo-500 transition-all shadow-sm">
-                    <span class="text-gray-500 font-medium no-wrap mr-3">1 台幣 =</span>
-                    <input type="number" id="rateInput" value="1" step="any"
-                        class="flex-1 focus:outline-none text-indigo-600 font-bold text-xl w-full bg-transparent"
-                        placeholder="請輸入匯率">
-                    <span class="text-gray-400 font-bold no-wrap ml-2">R 幣</span>
+                <div class="flex items-center bg-white border-2 border-slate-200 rounded-2xl px-4 py-3 focus-within:border-indigo-500 focus-within:ring-4 focus-within:ring-indigo-50 transition-all">
+                    <span class="text-slate-400 font-medium no-wrap mr-3">1 台幣 =</span>
+                    <input type="number" id="rateInput" value="1" step="any" inputmode="decimal"
+                        class="flex-1 text-indigo-600 font-bold text-xl w-full bg-transparent"
+                        placeholder="輸入匯率">
+                    <span class="text-slate-400 font-bold no-wrap ml-2">R 幣</span>
                 </div>
             </div>
 
@@ -54,18 +55,18 @@
             <div class="space-y-4 relative">
                 <!-- 台幣輸入 -->
                 <div class="group">
-                    <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-2">台幣 (TWD)</label>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-2">台幣 (TWD)</label>
                     <div class="relative">
-                        <input type="number" id="twdInput" 
-                            class="w-full bg-gray-50 border-2 border-gray-100 group-focus-within:border-indigo-500 group-focus-within:bg-white rounded-2xl px-5 py-4 text-2xl font-semibold transition-all outline-none"
-                            placeholder="0.00">
-                        <div class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-300 font-medium">NT$</div>
+                        <input type="number" id="twdInput" inputmode="decimal"
+                            class="w-full bg-white border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50 rounded-2xl px-5 py-4 text-2xl font-semibold transition-all outline-none"
+                            placeholder="0">
+                        <div class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 font-medium pointer-events-none">NT$</div>
                     </div>
                 </div>
 
-                <!-- 切換按鈕圖示 -->
+                <!-- 裝飾用切換圖示 -->
                 <div class="flex justify-center -my-3 relative z-10">
-                    <div class="bg-white p-2 rounded-full shadow-lg border border-gray-100 text-indigo-500">
+                    <div class="bg-white p-2 rounded-full shadow-md border border-slate-100 text-indigo-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                         </svg>
@@ -74,24 +75,22 @@
 
                 <!-- R 幣輸入 -->
                 <div class="group">
-                    <label class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 ml-2">R 幣 (RC)</label>
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-2">R 幣 (RC)</label>
                     <div class="relative">
-                        <input type="number" id="rInput" 
-                            class="w-full bg-gray-50 border-2 border-gray-100 group-focus-within:border-indigo-500 group-focus-within:bg-white rounded-2xl px-5 py-4 text-2xl font-semibold transition-all outline-none"
-                            placeholder="0.00">
-                        <div class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-300 font-bold">R</div>
+                        <input type="number" id="rInput" inputmode="decimal"
+                            class="w-full bg-white border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50 rounded-2xl px-5 py-4 text-2xl font-semibold transition-all outline-none"
+                            placeholder="0">
+                        <div class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-300 font-bold pointer-events-none">R</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 清除與資訊區 -->
-            <div class="flex flex-col space-y-4 pt-4">
-                <button id="clearBtn" class="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black active:scale-[0.97] transition-all shadow-xl">
+            <!-- 清除按鈕 -->
+            <div class="pt-4 text-center">
+                <button id="clearBtn" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-black active:scale-[0.97] transition-all shadow-xl mb-4">
                     清空數值
                 </button>
-                <div class="text-center pb-2">
-                    <p id="infoText" class="text-xs font-medium text-gray-400">目前匯率：1 TWD = 1.00 R幣</p>
-                </div>
+                <p id="infoText" class="text-xs font-medium text-slate-400">當前設定：1 台幣可兌換 1.00 R幣</p>
             </div>
         </div>
     </div>
@@ -103,50 +102,61 @@
         const clearBtn = document.getElementById('clearBtn');
         const infoText = document.getElementById('infoText');
 
-        function formatVal(num) {
-            if (isNaN(num) || num === 0) return '';
-            return Math.round((num + Number.EPSILON) * 10000) / 10000;
+        // 優化後的格式化函數：僅針對計算結果，不干擾正在輸入的欄位
+        function calculateVal(val, rate, mode) {
+            if (isNaN(val) || isNaN(rate) || rate === 0) return '';
+            const result = mode === 'toR' ? val * rate : val / rate;
+            // 限制 4 位小數，並移除末尾多餘的 0
+            return parseFloat(result.toFixed(4));
         }
 
-        function updateFromTWD() {
-            const rate = parseFloat(rateInput.value) || 0;
-            const twd = parseFloat(twdInput.value) || 0;
-            if (rate > 0) {
-                rInput.value = formatVal(twd * rate);
-            } else {
+        // 監聽台幣輸入
+        twdInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            const rate = parseFloat(rateInput.value);
+            if (e.target.value === '') {
                 rInput.value = '';
-            }
-        }
-
-        function updateFromR() {
-            const rate = parseFloat(rateInput.value) || 0;
-            const rVal = parseFloat(rInput.value) || 0;
-            if (rate > 0) {
-                twdInput.value = formatVal(rVal / rate);
             } else {
-                twdInput.value = '';
+                rInput.value = calculateVal(val, rate, 'toR');
             }
-        }
+        });
 
-        function updateInfo() {
+        // 監聽 R 幣輸入
+        rInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            const rate = parseFloat(rateInput.value);
+            if (e.target.value === '') {
+                twdInput.value = '';
+            } else {
+                twdInput.value = calculateVal(val, rate, 'toTWD');
+            }
+        });
+
+        // 監聽匯率變動
+        rateInput.addEventListener('input', () => {
             const rate = rateInput.value || '0';
-            infoText.textContent = `目前匯率：1 TWD = ${rate} R幣`;
-            updateFromTWD();
-        }
+            infoText.textContent = `當前設定：1 台幣可兌換 ${rate} R幣`;
+            // 以台幣為基準重算 R 幣
+            const twdVal = parseFloat(twdInput.value);
+            if (!isNaN(twdVal)) {
+                rInput.value = calculateVal(twdVal, parseFloat(rate), 'toR');
+            }
+        });
 
-        twdInput.addEventListener('input', updateFromTWD);
-        rInput.addEventListener('input', updateFromR);
-        rateInput.addEventListener('input', updateInfo);
-        
+        // 清空
         clearBtn.addEventListener('click', () => {
             twdInput.value = '';
             rInput.value = '';
+            twdInput.focus();
         });
 
-        // 自動全選功能
+        // 點擊自動全選 (優化版：只在初次獲取焦點時觸發一次)
         [rateInput, twdInput, rInput].forEach(input => {
-            input.addEventListener('focus', (e) => {
-                setTimeout(() => e.target.select(), 10);
+            input.addEventListener('focus', function() {
+                // 延遲執行選取，避免與系統鍵盤彈出衝突
+                setTimeout(() => {
+                    this.setSelectionRange(0, this.value.length);
+                }, 50);
             });
         });
     </script>
